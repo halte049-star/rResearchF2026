@@ -32,8 +32,10 @@ You could print the dataframe repeatedly, but it's tedious. Here are some functi
 
 We'll use penguins to learn about: `colnames()`, `names()`, and 0 row
 ```{r}
+colnames(penguins)<- tolower(colnames(penguins))
+colnames(penguins)<- toupper(colnames(penguins))
 colnames(penguins)
-names(penguins)
+view(penguins)
 ```
 
 ### editing column names 
@@ -41,18 +43,20 @@ names(penguins)
 ```{r}
 colnames(penguins)
 colnames(penguins)[1]<-"species"
+penguins$daFavs<- NA
 ```
 
 It **also** means that you can change names if necessary (when we talk about dataframe manipulation next week, this can become important.)
 `colnames(data)[position]`
 ```{r}
-
+penguins$daFavs[penguins$species== "Adelie"]<- "Yes"
 ```
 
 More often than not, we're using datasets that we either created or received from collaborators. That means that you may be dealing with problems **past you** graciously left you, different naming conventions, or even needing to manipulate variables that combine information. We'll talk about how to fix some of the more involved ones next week. For now, ones that may be helpful are making sure your column names are all lower case or all upper case. You can do this with the `toupper()` and `tolower()` functions:
 
 ```{r}
-
+toupper()
+tolower()
 ```
 
 ### Adding Column Names
@@ -61,11 +65,11 @@ dataframe$newColumn<- whatever you're assigning
 
 For instance, if you want to add a blank column:
 ```{r}
-
+penguins$daFavs<- NA
 ```
 Then you can fill it with whatever information you want. 
 ```{r}
-
+penguins$daFavs[penguins$species== "Adelie"]<- "Yes"
 ```
 or you can fill the new column in based on other data in the dataframe
 ```{r}
@@ -74,26 +78,33 @@ or you can fill the new column in based on other data in the dataframe
 ```
 can do math to fill in the columns
 ```{r}
+penguins$BigPenguin<- NA
 
+penguins$BigPenguin [penguins$body_mass_g >
+mean(penguins$body_mass_g, na.rm=TRUE)] <- "big penguin"
+penguins$BigPenguin [penguins$body_mass_g <=
+mean(penguins$body_mass_g, na.rm=TRUE)] <- "not big penguin:("
 ```
 
-#### Learning Outcome 1 Practice: 
+# Learning Outcome 1 Practice: 
 
 1. Change all of the column names in mtcars to capital letters
 ```{r}
-
+view(mtcars)
+colnames(mtcars)<- toupper(colnames(mtcars))
+colnames(mtcars)
 ```
 2. Change the name of the 9th column to reflect the values in the am column description
 ```{r}
-
+colnames(mtcars)[9]<- "TRANSMISSION"
 ```
 
 3. Change the 4th column name to all lowercase letters 
 ```{r}
-
+colnames(mtcars)[4]<- "hp"
 ```
 
-## Learning Outcome 2: Explain different classes of variables and how to change the class
+# Learning Outcome 2: Explain different classes of variables and how to change the class
 
 We talked about this a little bit last week, but there are different classes (types) of objects in R. As we move forward, the specific class of an object will be important. 
 
@@ -110,42 +121,69 @@ We talked about this a little bit last week, but there are different classes (ty
 
 You can check the class of your data using `class()`
 ```{r}
-
+class(mtcars$HP)
+class(penguins$body_mass_g)
+view(penguins)
 ```
 
 If you want to change the class of your variable, you can assign `as.Preferredclass(dataframe$column)` to the column name
 
 ```{r}
 "is.classname"
-
+is.integer(penguins$body_mass_g)
+is.factor(penguins$body_mass_g)
 "as.classname"
+as.factor(penguins$body_mass_g)
+as.character(penguins$body_mass_g)
+as.factor(penguins$body_mass_g)
+
 #make a new column 
-
+penguins$species<- as.factor(penguins$species)
+class(penguins$species)
 # going from factor to numeric can cause issues and there's a specific way to do it
+
 ```
+
 **DOUBLE CHECK YOUR DATA**
-```{r}
 
+```{r}
+penguins$bodyMass2<- as.factor(penguins$body_mass_g)
+
+penguins$bodyMass2<- as.numeric(penguins$bodyMass2)
+
+library(tidyverse)
+penguins |> select(body_mass_g, bodyMass2)
+
+penguins$bodymass3<- as.factor(penguins$body_mass_g)
+
+penguins$bodymass3<- as.numeric((levels(penguins$bodymass3)[penguins$bodymass3])
+                                
+penguins |> select(body_mass_g, bodymass3)                  
 ```
 
-### Learning Outcome 2 Practice:
+# Learning Outcome 2 Practice:
 1. Check the class of the horsepower column (hp) 
 ```{r}
-
+data(mtcars)
+class(mtcars$hp)
 ```
 
 2. Change the class of horsepower to a factor
 ```{r}
+class(mtcars$hp)
 
+mtcars$hp2<- as.factor(mtcars$hp)
 ```
 
 3. Look at summaries of horsepower as a factor and as a number. What do you notice? 
 ```{r}
-
+summary(mtcars$hp)
+summary(mtcars$hp2)
 ```
+As a factor, HP is just a string of numbers. As numeric hp summary gave means, media, min, etc
 
 
-## Learning Outcome 3: Create your own function
+# Learning Outcome 3: Create your own function
 
 There are lots of functions in R that are helpful, but some times you need to make your own. I do this a lot when cleaning data.
 Making a function takes the following structure: 
@@ -160,48 +198,64 @@ You can make a simple function that adds two to a set of numbers
 Before we make the function, we'll make a vector of numbers (1-10) as our input
 
 ```{r}
-
+number<- 1:10
 ```
+
+```{r}
+addTow<- function(num){
+  num + 2
+}
+```
+
+```{r}
+addTow(3)
+addTow(number)
+```
+
 
 then, we'll name our function addTwo and give it one argument or input
 
-```{r}
-
-```
 if we run this correctly, it should show up in the environment (top right). 
 
 Then, we can use our function to add two to our vector:
 
-```{r}
-
-```
 
 One thing to note- anything you make in a function **stays in the function.** If you want to save it to a dataframe, you treat your new function just like any other R function (i.e. you need to assign the output to a column or variable)
 
 ```{r}
 "dataframe$column <- function"
+numDat<- data.frame(number)
 
+addTow(numDat$number)
+numDat$plusTwo<- addTow(numDat$number)
+view(numDat)
 ```
 
-## Practice:
+# Practice:
 function to multiply by 7
 ```{r}
-
+mulSev<- function(num){
+  num * 7
+}
 ```
 test it out
 ```{r}
-
+mulSev(1)
+mulSev(10)
+mulSev(number)
 ```
 
 Functions w/ characters
 **my favorite is**
 `paste()`
 ```{r}
-
+favFood<- function(food){
+  paste("My favorite food is", food)
+}
 ```
 test
 ```{r}
-
+favFood("ham")
 ```
 
 ### Multiple argument functions
