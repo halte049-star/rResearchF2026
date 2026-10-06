@@ -357,25 +357,39 @@ for(i in 1:nrow(numDat)){
 
 1. Create a for loop that will multiply each number in a vector by 4. Test it with a vector containing the numbers 10:100. 
 ```{r}
-nenum<- data.frame(10:100)
-nenum$mul4<- NA
-class(newnum)
-```
+newNum<- 10:100
+newNumDat<- data.frame(newNum)
+newNumDat$mulF<- NA
 
-```{r}
-for(i in 1:nrow(nenum)){
-  nenum$mul4[i]<- nenum$X10.100[i] *4
+for(i in 1:nrow(newNumDat)){
+  newNumDat$mulF[i]<- newNumDat$newNum[i]*4
 }
 ```
 
+
+
+```{r}
+vect<- 10:100
+for(i in 1:length(vect)){
+  print(vect[i]*4)
+}
+```
+
+
 2. Create a new column in the mtcars data set that indicated whether a car has good mileage (over 25 mpg) or bad mileage (25 mpg or fewer).  
 ```{r}
+data(mtcars)
+mtcars$goodMileage<- NA
+for(car in 1:nrow(mtcars)){
+  mtcars$goodMileage[car]<- mtcars$mpg[car]>25
+}
+
 
 ```
 
 # Learning Outcome 5: Create your own if statements and ifelse statments
 
-### if statements
+# if statements
 
 if statements only carry out an action if a given condition is met.
 It looks like this: 
@@ -386,7 +400,27 @@ what you want to happen
 
 Let's try one: in this case, we'll make an if statement to mileage
 ```{r}
+mtcars$goodMileageTwo<- NA
 
+
+
+
+
+for(i in 1:length(mtcars$mpg)){
+  if(mtcars$mpg[i] >25){
+    mtcars$goodMileageTwo[i]<- "good"
+  }
+  else(mtcars$goodMileageTwo[i]<- "bad")
+} 
+###### this is not working for some reason, troubleshoot?
+
+
+for(i in 1:nrow(mtcars)){
+  if(mtcars$mpg[i]>25){
+    mtcars$goodMileageTwo[i]<- "good"
+  }
+  else(mtcars$goodMileageTwo[i]<- "bad")
+}
 ```
 ### else statement
 ```{r}
@@ -400,18 +434,42 @@ R lets you combine if/else statements into a single function, ifelse().
 
 We can use this to accomplish the same thing we did above:
 ```{r}
-
+mtcars$goodMileageThree<- NA
+mtcars$goodMileageThree<- ifelse(mtcars$mpg>25, "good", "bad")
 ```
+
+```{r}
+####mtcars greater than 25mpg and 4 gears
+ifelse(mtcars$mpg>25, ifelse(mtcars$gear==4, "good4", "goodnot4"), "bad")
+```
+
 
 # Learning Outcome 5 Practice: 
 
 1. Make an if statement to determine if the weight of a chick on a given day is greater than 100 grams.  (i.e. is the weight in each row greater than 100 )
 ```{r}
+data("ChickWeight")
+
+ChickWeight$overOneHundred<- NA
+ChickWeight$overOneHundred<- ifelse(ChickWeight$weight>100, "good", "bad")
+
 
 ```
 
 2. create a new column in the mtcars data set to indicate whether a car has a manual or automatic transmission. 
 ```{r}
+data(mtcars)
+mtcars$transmissionType<- NA
 
+for(i in 1:nrow(mtcars)){
+  if(mtcars$am[i]>=1)
+    mtcars$transmissionType<- "manual"
+  else(mtcars$transmissionType[i]<- "automatic")
+}
+
+
+
+
+#########
 ```
 
