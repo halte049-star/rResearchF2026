@@ -57,7 +57,7 @@ text goes outside
 
 # Learning Outcome 1: Mathematical Expressions and Logical Statements
 
-### Math
+# Math
 
 R can be treated like a big fancy calculator (think scientific
 calculators you may have used previously), but can do much more.
