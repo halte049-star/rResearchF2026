@@ -67,7 +67,8 @@ For instance, if you want to add a blank column:
 ```{r}
 penguins$daFavs<- NA
 ```
-Then you can fill it with whatever information you want. 
+Then you can 
+fill it with whatever information you want. 
 ```{r}
 penguins$daFavs[penguins$species== "Adelie"]<- "Yes"
 ```
