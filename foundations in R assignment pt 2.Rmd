@@ -17,25 +17,74 @@ data("billboard")
 ```
 3. Describe the dataset. 
 ```{r}
-
+summary(billboard)
 ```
 
 4. Print the column names from this dataset. 
 ```{r}
-
+colnames(billboard)
 ```
 
 5. Print the first 5 entries in the dataset. 
 ```{r}
-
+billboard[1:5,]
 ```
 
 # Practice
 1. Create a subset of data that has Jay-Z as the only artist. How many songs are in it?
+```{r}
+jayZ<-subset(billboard, billboard$artist=="Jay-Z")
+#5 songs
+```
+
 2. In the original dataset, use filter to find information about the song "All the small things." What was the highest position (i.e. lowest number) this song reached on the billboard 100? 
+```{r}
+library(tidyverse)
+smallThing<- billboard %>% filter(track=="All The Small Things")
+print(smallThing)
+#highest was wk 12 at position 6
+```
+
 3. Create a subset of data for songs Tim McGraw sang. Summarize the data for wk 1.
+```{r}
+timMc<-subset(billboard, billboard$artist=="McGraw, Tim")
+summary(timMc$wk1)
+```
+
 4. Create a function that can be used to determine if Britney Spears sang the song. 
+```{r}
+songsBritneySang<- function(artist){
+  ifelse(billboard$artist=="Spears, Britney", "YES", "NO")
+  }
+```
+
 5. Test your function on the billboard data. Save the results to a new column called "wasItBritney"
+```{r}
+billboard$wasItBritney<- "NA"
+billboard$wasItBritney<- songsBritneySang()
+```
+
 6. Use a for loop to determine if a song placed 50 or below or placed above 50 during the first week. 
+```{r}
+billboard$wk1Rank<- "NA"
+for(i in 1:nrow(billboard)){
+  if(billboard$wk1[i] >= 50){
+    billboard$wk1Rank[i]<- "above50"
+  }
+  else(billboard$wk1Rank[i] <- "bellow50")
+}
+
+```
+
 7. Use an if else statement to determine the same information as you obtained with the for loop. 
+```{r}
+billboard$wk1Rank2<- "NA"
+billboard$wk1Rank2<- ifelse(billboard$wk1 >= 50, "above50", "below50")
+```
+
 8. Compare your results in 6 and 7. 
+```{r}
+print(billboard$wk1Rank)
+print(billboard$wk1Rank2)
+```
+Ifelse has more observations (313), the for loop gave me 309, so I probably need to adjust my numbers in my for loop. 
