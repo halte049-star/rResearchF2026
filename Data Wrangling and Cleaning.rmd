@@ -22,8 +22,8 @@ Once you press okay, you'll see your dataset pop up in the console below. You sh
 
 ```{r}
 library(readr)
-agressionDat <- read_csv("PSY4802-AggressionSampleData.csv")
-View(agressionDat)
+aggressionDat <- read_csv("PSY4802-AggressionSampleData.csv")
+View(aggressionDat)
 ```
 getting/setting wd
 ```{r}
@@ -53,14 +53,15 @@ library(tidyverse)
 names_to: specifies what you'd like to call the column that contains the previous column names
 values_to: specifies the name of the column where the scores go
 ```{r}
-agressionDatLong<- pivot_longer(agressionDat, cols= c("baselineAggression", "postAggression"), names_to = "timePoint", values_to= "aggressionScores")
+aggressionDatLong<- pivot_longer(aggressionDat, cols= c("baselineAggression", "postAggression"), names_to = "timePoint", values_to= "aggressionScores")
 ```
 
 **using pipes instead**
 
 ```{r}
 ###pipes in tidyverse
-agressionDatPipe<- agressionDat |> pivot_longer(cols= c("baselineAggression", "postAggression"), names_to = "timePoint", values_to= "aggressionScores"))
+
+aggressionDatPipe<- aggressionDat |> pivot_longer(cols= c("baselineAggression", "postAggression"), names_to = "timePoint", values_to= "aggressionScores")
 ```
 
 **Note:** remember to save the data to your environment. 
@@ -92,7 +93,7 @@ key- what you'd like the column containing old column names to be called
 value- what you'd like the scores column to be called
 
 ```{r}
-agressionDatLong2<- gather(agressionDat, key="Timepoint", value="Agressionscore", c("baselineAggression", "postAggression"))
+aggressionDatLong2<- gather(aggressionDat, key="Timepoint", value="Agressionscore", c("baselineAggression", "postAggression"))
 ```
 
 **melt**
@@ -103,7 +104,7 @@ library(reshape2)
 `melt()` uses the following arguments: 
 `melt(dataframe, id.vars, measure.vars, variable.name, value.name)`
 ```{r}
-agressionDatLong3<- melt(agressionDat, id.vars= c("subjNo", "ageGroup" ,"parentReportGender", "condition"), measure.vars= c("baselineAggression", "postAggression"), variable.name="timePoint", values.name="aggressionScore")
+aggressionDatLong3<- melt(aggressionDat, id.vars= c("subjNo", "ageGroup" ,"parentReportGender", "condition"), measure.vars= c("baselineAggression", "postAggression"), variable.name="timePoint", values.name="aggressionScore")
 melt()
 ```
 
@@ -133,11 +134,11 @@ As above, we'll restructure the data in three ways. Again, some ways are more in
 The pair function for pivot_longer. It has the following arguments: 
 `pivot_wider(dataset, id columns, names_from, values_from)`
 ```{r}
-
+aggressionDatWide<- aggressionDatLong |> pivot_wider= id_cols= c("subjNo", "ageGroup", "parentReportGender", "condition") names_from= "timePoint", values_from= "aggressionScores")
 ```
 
 ```{r}
-
+aggressionDatWide<- aggressionDatLong |> pivot_wider= id_cols= "subjNo", "ageGroup", "parentReportGender", "condition") names_from= "timePoint", values_from="aggressionScores"))
 ```
 
 **spread** 
@@ -145,7 +146,7 @@ is the pair function for gather. It has the following arguments:
 `spread(data, key, value, columns to make wide)`
 key = timepoint; value = aggression score
 ```{r}
-
+aggressionDatWide2<- spread(aggressionDatLong, key= "timePoint", value="aggressionScores")
 ```
 
 **dcast**
@@ -153,19 +154,19 @@ cast functions are the pairs to melt. `dcast()` specifically is used for datafra
 dcast has the following arguments: 
 `dcast(data, formula)`
 ```{r}
-
+datWide3<- dcast(aggressionDatLong, formula= subjNo+ageGroup+parentReportGender+condition~timePoint)
 ```
 **Note:** dcast is really not intuitive. I pretty much determine the correct order through trial and error every time. 
 
 #### Learning Outcome 2: Practice
 1. Open the ChickWeight dataset.
 ```{r}
-
+data("ChickWeight")
 ```
 
 2. Convert it from long to wide format. 
 ```{r}
-
+chickWide<- ChickWeight |> pivot_wider (id_cols= c("Chick", "Diet"), names_from="Time", values_from="weight", names_prefix="Day")
 ```
 #lessons learned
 pivot_wider(ChickWeight, id_cols = c("Chick", "Diet", "Time", "weight"),names_from="Time", values_from="weight") #won't work, can only use a column name once
@@ -177,9 +178,12 @@ a<-pivot_wider(ChickWeight, id_cols= (1:2), names_from="Time", values_from="weig
 
 3. Convert from wide to long. 
 ```{r}
-
+ChickWeightLong<- chickWide |> pivot_longer(cols=c(colnames(chickWide)[3:14], names_to="Time", values_to="Weight") ##hard code
+                                            
+ChickWeightLong<- chickWide |> pivot_longer(cols=(3:14), names_to="Time", values_to="Weight") ##soft coding
 ```
-
+cols=(3:14) is soft coding
+cols=colnames(ChickWeight)[3:14],
 
 ### A note on pipes for data restructuring
 A lot of the functions we've covered above can also be used with pipes. Here, we'll go through some ways that you can use pipes to restructure your data. 
@@ -196,20 +200,29 @@ you can use some of the commands we've already used in a different structure
 
 1) open sleep data set
 ```{r}
-
+data(sleep)
 ```
 
 2) identify the type of data (wide/long)
+```{r}
+view(sleep)
+long data
+```
 
 
 3) change it to the other type
 ```{r}
-
+sleepLong<- sleep |> pivot_wider (id_cols= c("ID"), names_from="group", values_from="extra", names_prefix="group")
 ```
 
 4) Go back to the chick weight dataset and take all data from chick 3 and put it in wide format 
 ```{r}
-
+chickThree<- c("Chick", "Diet", "Day0", "Day2", "Day4", "Day6", "Day8", "Day10", "Day12", "Day14", "Day16", "Day18", "Day20", "Day21")
+```
+```{r}
+chickThree<- chickWide[3,1:14]
+chick3<- subset(ChickWeight, ChickWeight$Chick==3)
+chick3 |> pivot_wider(id_cols= c("Chick", "Diet"), names_from="Time", values_from="weight")
 ```
 
 ### Learning Outcome 3: Join data sets in R
