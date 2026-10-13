@@ -19,6 +19,8 @@ score<-seq(1,100,9)
 ```{r}
 participants<- c("participant1", "participant2", "participant3", "participant4", "participant5", "participant6", "participant7", "participant8", "participant9", "participant10", "participant11", "participant12")
 ```
+AW comment: could do participants<- 1:12
+if you want the word participant, could also consider paste("participant", 1:12)
 
 3. Create a list called condition that alternates the words control and experimental six times, for a total of 12 words.
 ```{r}
@@ -42,6 +44,7 @@ mean(daFr$score)
 data("penguins")
 print(penguins)
 ```
+AW: don't need print but ok to use
 
 7. Create a subset of data for Adelie penguins. 
 ```{r}
@@ -64,6 +67,11 @@ mean(penguins$bill_len, na.rm=TRUE)] <- "bigger than average or average"
 penguins$bigBill [penguins$bill_len >
 mean(penguins$bill_len, na.rm=TRUE)] <- "not bigger than average"
 ```
+Aw comment: i usually run into issues putting numbers in as characters (see line 63)
+
+looking at the bottom chunk, it looks like you tried to fill in a column of true/falses. could have used subset(penguins, penguins$bill_len > mean(penguins$bill_len, na.rm=TRUE) 
+
+indexing would also work for this, but would do penguins[penguins$bill_len > mean(penguins$bill_len, na.rm=TRUE,]
 
 9. How many penguins are in this subset? 
 ```{r}
@@ -83,6 +91,9 @@ newDi<-diamonds %>% filter(carat>=1 & cut=="Ideal")
 ```
 **I don't know why my code ran and made my column name everything from diamonds onwords, but it worked and I changed the column name and that's all that matters...**
 
+AW comment: didi not explicitly open diamonds, but I forgot to write that as a step :) 
+I alsoddon't see a new column , did you mean dataframe?
+
 13. Find the mean and standard deviation of price for this new dataset. 
 ```{r}
 mean(newDi$price)
@@ -93,7 +104,7 @@ sd(newDi$price)
 ```{r}
 bigExpensiveDiamonds<-diamonds  %>% filter(price>2499 & price<5001)
 ```
-
+could use >2500 and <5000
 15. Which color occurs most in this new subset? 
 ```{r}
 summary(bigExpensiveDiamonds)
