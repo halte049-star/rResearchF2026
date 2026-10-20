@@ -20,44 +20,48 @@ data("starwars")
 
 3. Create a subset of data that contains only the humans from the starwars franchise.
 ```{r}
-starwars$humans<- NA
-starwars$humans[starwars$species== "Human"] <- "Yes"
+starHum<- data.frame(subset(starwars, starwars$species=="Human"))
 ```
 
 4. In this subset of data, who is the tallest character? 
 ```{r}
-starwars$tall<- NA
-starwars$tall<- starwars %>% filter(height==)
-range(starwars$height, )
+tallestHuman<- max(starHum$height, na.rm=TRUE)
+print(tallestHuman)
+#202cm
 ```
+**As a note, a classmate told me about the max() function, I was going to use range and just get the biggest value, but this was a lot easier and reinforces that talking to classmates helps a lot.**
 
 5. In this subset of data, print the information about the character in the third row.
 ```{r}
-
+rowThree<-starHum[3,]
+print(rowThree)
 ```
 
 6. In the full starwars dataset, calculate the average mass for the masculine characters. 
 ```{r}
-
+mean(starwars$mass, na.rm=TRUE)
+#97.31186
 ```
 
 7. Create a dataset that contains only the characters and the films that they appeared in from the full dataset. 
 ```{r}
-
+charAndFilm<- data.frame(starwars[,1], starwars[,12])
 ```
+
 
 8. Create a new column in the starwars dataset that contains a "ranking" of all characters (Note: you don't have to actually rank them. Just fill the column in with the numbers 1-87)
 ```{r}
-
+starwars$rank<- 1:87
 ```
 
 9. Create a subset of data for the characters from Naboo. How many characters are from Naboo? 
 ```{r}
-
+fromNaboo<- subset(starwars, starwars$homeworld=="Naboo")
 ```
 
 10. How many droids are in the full dataset? 
 ```{r}
-
+starwarsDroids<- subset(starwars, starwars$species=="Droid")
+#there are 6 droids in the full dataset
 ```
 
