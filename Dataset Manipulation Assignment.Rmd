@@ -1,6 +1,7 @@
 ---
 title: "Dataset Manipulation Assignment"
 author: "Amanda Mae Woodward"
+student: "Ashley Halterman"
 date: "2026-10-07"
 output: html_document
 ---
@@ -8,17 +9,17 @@ output: html_document
 #Part 1
 1.Open the sleep dataset in R
 ```{r}
-
+library(tidyverse)
+data(sleep)
 ```
 
 2. Is it long or wide format? How do you know?
-```{r}
-
-```
+**It's long data. Each participant only has 2 rows of data showing the results of the two different types of drugs used, as apposed to having each participant having 1 row with the results in separate columns. **
 
 3. Transform this data so that it is in the other format.
 ```{r}
-
+sleepLong<- pivot_longer(sleep, cols= c("")
+aggressionDatLong<- pivot_longer(aggressionDat, cols= c("baselineAggression", "postAggression"), names_to = "timePoint", values_to= "aggressionScores")
 ```
 
 4. Transform your data back to its original format.
@@ -27,6 +28,10 @@ output: html_document
 ```
 
 5. Open the Starwars dataset
+```{r}
+data(starwars)
+```
+
 
 6. Create homeworld as a factor. How many levels does it have?
 ```{r}

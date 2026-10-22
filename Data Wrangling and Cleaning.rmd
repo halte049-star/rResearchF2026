@@ -225,7 +225,7 @@ chick3<- subset(ChickWeight, ChickWeight$Chick==3)
 chick3 |> pivot_wider(id_cols= c("Chick", "Diet"), names_from="Time", values_from="weight")
 ```
 
-### Learning Outcome 3: Join data sets in R
+# Learning Outcome 3: Join data sets in R
 Some times, we have datasets that we need to join or merge (e.g. participant demographics in one file and responses in a second). We can combine these datasets using "join." If you've ever used/heard of SQL, join works the same way in R
 
 We'll practice on the following code: 
@@ -234,16 +234,18 @@ Make a data frame with subject number and simulated anxiety scores
 #find an anxiety scale to find range of possible scores
 #Hamilton anxiety rating scale (0 no anxiety; <17 mild;18-24- mild/moderate, 25-30- moderate/severe ;30- 56- severe)
 
+subjNo<- aggressionDat$subjNo
+anxietyScore<- sample(0:56, 48, replace = TRUE)
+anxietyDat<- cbind.data.frame(subjNo, anxietyScore)
 ```
 use `left_join()`
 ```{r}
-
-
+aggressionAnxietyDat<- left_join(aggressionDat, anxietyDat, by="subjNo")
 ```
 
 `right_join()` does the same thing, but starts on the right. 
 
-#### Learning Outcome 3 Practice
+# Learning Outcome 3 Practice
 1. Create a dataframe (n=48) that includes subject numbers and executive function scores (ranging from 0-16).
 ```{r}
 
@@ -254,7 +256,7 @@ use `left_join()`
 
 ```
 
-### Learning Outcomes 4 & 5: Use functions to clean data (and pipes)
+# Learning Outcomes 4 & 5: Use functions to clean data (and pipes)
 Now that we've covered how to restructure data, we'll talk about ways to clean it. These are just some of the functions I find myself using, and there are certainly more. This section is a bit longer, so there will be practice questions mixed in. 
 
 **Changing levels** 
@@ -264,12 +266,15 @@ As we talked about before, there are different classes(or types) of data in R. F
 Let's take the example from our final dataset (datFinal). We can change parentReportGender to have levels of "boy" and "girl."
 we'll check what class it is first
 ```{r}
-
+class(aggressionAnxietyDat$parentReportGender)
 ```
 it's currently a character, so we can change it to a factor using as.factor (which we talked about last week). Then, we can use the function `levels()` to change the data. 
 
 ```{r}
+aggressionAnxietyDat$parentReportGenderTwo<- as.factor(aggressionAnxietyDat$parentReportGender)
 
+levels(aggressionAnxietyDat$parentReportGenderTwo)<- c("girl", "boy")
+levels(aggressionAnxietyDat$parentReportGenderTwo)
 ```
 
 Note: because I saved these as different columns, I can directly compare the data held in each to ensure I've changed everything correctly. 
@@ -281,7 +286,7 @@ Note: because I saved these as different columns, I can directly compare the dat
 Also, keep in mind that changing levels of a factor requires you to know **know what levels are currently in your data.** You can check this by either printing the column as I've done above, or using the levels command:
 `factor(data, levels = x,y,z)`
 ```{r}
-
+factor(aggressionAnxietyDat$parentReportGender, levels= c("F", "M"), labels=c("girl", "boy"))
 ```
 I'd recommend this version, particularly if you have a large data set. 
 
