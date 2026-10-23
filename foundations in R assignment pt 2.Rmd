@@ -29,6 +29,7 @@ colnames(billboard)
 ```{r}
 billboard[1:5,]
 ```
+AW comment: this works, head(data, 5) also works 
 
 # Practice
 1. Create a subset of data that has Jay-Z as the only artist. How many songs are in it?
@@ -57,13 +58,14 @@ songsBritneySang<- function(artist){
   ifelse(billboard$artist=="Spears, Britney", "YES", "NO")
   }
 ```
+AW comment: functions are typically more general, so would remove billboard$artist and do artist alone 
 
 5. Test your function on the billboard data. Save the results to a new column called "wasItBritney"
 ```{r}
 billboard$wasItBritney<- "NA"
 billboard$wasItBritney<- songsBritneySang()
 ```
-
+then, you'd do songBritneySang(billboard$artist)
 6. Use a for loop to determine if a song placed 50 or below or placed above 50 during the first week. 
 ```{r}
 billboard$wk1Rank<- "NA"
@@ -87,4 +89,5 @@ billboard$wk1Rank2<- ifelse(billboard$wk1 >= 50, "above50", "below50")
 print(billboard$wk1Rank)
 print(billboard$wk1Rank2)
 ```
+how do they compare? 
 Ifelse has more observations (313), the for loop gave me 309, so I probably need to adjust my numbers in my for loop. 
