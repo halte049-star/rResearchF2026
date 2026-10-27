@@ -22,6 +22,7 @@ We've already talked about how to transform data into wide and long format. For 
 To do this, we're going to use a function called `summarySE()`. It's in the Rmisc package
 ```{r}
 library(Rmisc)
+library(ggplot2)
 data(diamonds)
 ```
 
@@ -122,7 +123,7 @@ ggplot(diamonds, aes(carat))+geom_histogram(fill="#CC99FF", color="#000")+theme_
 
 **Just because you can use a color scheme, doesn't mean you should** 
 
-#### Histogram Practice: 
+# Histogram Practice: 
 1. Create a histogram of the bill length variable. 
 ```{r}
 ggplot(penguins, aes(bill_len))+geom_histogram(fill="khaki4", color="green")+theme_apa()
@@ -142,6 +143,11 @@ ggplot(penguins, aes(bill_len))+geom_histogram(fill="sienna1", color="blueviolet
 4. **Bonus** Create a histogram with the worst color combination you can think of. 
 ```{r}
 
+ggplot(darkTriad, aes(Psychopathy))+geom_histogram(fill="#e5c0cd", color="#355c7d")+theme_apa() 
+
+
+
+ggplot(darkTriad, aes(Psychopathy))+geom_histogram(fill="khaki4", color="green")+theme_apa() + xlab("Psychopathy") + ylab("Freqency") + ggtitle("Plot  Psychopothy")
 
 ```
 
@@ -207,7 +213,7 @@ Things I changed:
 - size: changes how big something is 
 **Note:** `geom_vline()` works the same way,but you need to specify where it crosses the x intercept. 
 
-### Practice: 
+## Practice: 
 1. Create a bar graph for the species column. 
 ```{r}
 ggplot(penguins, aes(species))+geom_bar(fill="thistle1", color="black")
@@ -221,7 +227,7 @@ ggplot(diamondsSummary, aes(color, carat))+geom_bar(stat="identity", fill="thist
 ```
 
 
-### Adding a second variable to a bar graph: 
+# Adding a second variable to a bar graph: 
 ```{r}
 ggplot(diamonds, aes(clarity, fill = color))+ geom_bar()
 ggplot(diamonds, aes(clarity, fill=color))+geom_bar(position=position_dodge())
@@ -231,6 +237,11 @@ ggplot(diamonds, aes(clarity, fill =as.factor(price)))+ geom_bar()
 **Scatter plot**
 We can make scatter plots using the argument `geom_point()`. We'll make a graph of carat by price. 
 ```{r}
+ggplot(diamonds, aes(price, carat))+ geom_point()
+ggplot(diamonds, aes(price, carat))+ geom_point(shape=8, color="pink") +geom_smooth(method="lm", linetype="dashed", color="black")
+
+
+ggplot(diamonds, aes(price, carat, color=cut))+ geom_point(shape=6)+geom_smooth(method="lm")
 
 ```
 
@@ -242,12 +253,13 @@ We can make scatter plots using the argument `geom_point()`. We'll make a graph 
 ### Practice
 - make a scatter plot of bill length and bill depth. 
 ```{r}
-
+data(penguins)
+ggplot(penguins, aes(bill_len, bill_dep))+ geom_point(shape=2, color="black")
 ```
 
 - modify the graph to include at least 2of the style elements we talked about
 ```{r}
-
+ggplot(penguins, aes(bill_len, bill_dep))+ geom_point(shape=2, color="black")+geom_smooth(method="lm",linetype="solid", color="red")
 ```
 
 **Note:**In this case, `geom_point()` is the best option to make our scatter plot. If you work with small datasets, the points may be overlapping and make it look like you have less data. In these cases, you can use `geom_jitter()`, which will offset the dots slightly and allow you to see each participant.  
@@ -255,13 +267,20 @@ We can make scatter plots using the argument `geom_point()`. We'll make a graph 
 **Inserting a regression line**
 We can include a regression line into our graph using `geom_smooth()`.
 ```{r}
-
+ggplot(penguins, aes(bill_len, bill_dep))+ geom_point(shape=2, color="black")+geom_smooth(method="lm",linetype="solid", color="red", se=FALSE)
+##SE equals false removes gray around line
 ```
 We can customize whether the regression line has a confidence interval surrounding it. You may be asking yourself **what confidence interval**. Carat and price are very highly correlated. let's use an mtcars example to see how we can change it. 
 w/ 95% confidence interval shaded
+
 ```{r}
+ggplot(diamonds, aes(color, price))+geom_boxplot()+geom_jitter()
+
+ggplot(mtcars, aes(as.factor(gear), mpg))+ geom_boxplot(fill="blue", color="black")+geom_jitter(color="aquamarine")
 
 ```
+
+
 **Changing scatterplots**
 ```{r}
 
@@ -270,19 +289,19 @@ w/ 95% confidence interval shaded
 ####Practice: 
 1. Create a scatter plot of the body mass and flipper length variables. 
 ```{r}
-
+ggplot(penguins, aes(body_mass, flipper_len))+ geom_point()
 ```
 2. Change the color of the points to your favorite color. 
 ```{r}
-
+ggplot(penguins, aes(body_mass, flipper_len))+ geom_point(color="darkred")
 ```
 3. Change the shape of the points. 
 ```{r}
-
+ggplot(penguins, aes(body_mass, flipper_len))+ geom_point(shape=2, color="darkred")
 ```
 4. Add a line of best fit to your scatter plot. 
 ```{r}
-
+ggplot(penguins, aes(body_mass, flipper_len))+ geom_point(shape=2, color="darkred")+geom_smooth(method="lm", linetype="short")
 
 ```
 
@@ -290,7 +309,9 @@ w/ 95% confidence interval shaded
 Line graphs follow a similar to scatterplots, but use the geom_line function. Color customizations follow the same rules as scatterplots. 
 include group in aes
 ```{r}
-
+ggplot(diamonds, aes(price, carat))+geom_line()
+data(ChickWeight)
+ggplot(ChickWeight, aes(Time, weight, group=Chick, color=Chick))+geom_line()
 ```
 
 
@@ -302,7 +323,9 @@ I hope that the pattern is starting to make sense, but the only difference with 
 
 
 ```{r twoVariableBoxplot}
-
+ggplot(diamonds, aes(y=price))+geom_boxplot()
+ggplot(diamonds, aes(price))+geom_boxplot()
+ggplot(diamonds, aes(x= cut, y=price))+geom_boxplot()
 ```
 
 
@@ -310,6 +333,7 @@ I hope that the pattern is starting to make sense, but the only difference with 
 
 ### Violin plot
 ```{r}
+ggplot(diamonds, aes(cut, price))+geom_violin()
 
 ```
 
