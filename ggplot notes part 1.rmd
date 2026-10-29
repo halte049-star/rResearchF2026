@@ -337,24 +337,21 @@ ggplot(diamonds, aes(cut, price))+geom_violin()
 
 ```
 
-```{r}
-
-```
 
 ### Practice: 
 1. Create a boxplot for flipper length.
 ```{r}
-
+ggplot(penguins, aes(bill_len))+geom_boxplot()
 ```
 
 2. Create boxplots of flipper length for each species.
 ```{r}
-
+ggplot(penguins, aes(species, bill_len))+geom_boxplot()
 ```
 
 3. **Bonus** play around with fill and color. What changes about your boxplots? 
 ```{r}
-
+ggplot(penguins, aes(species, bill_len))+geom_boxplot(fill="thistle", color="blue")+theme_apa()
 ```
 
 ## Learning Outcome 4:Incorporate third variables into graphs
@@ -371,7 +368,7 @@ For scatter plots:
 color = 
 for scatterplot of price, carat, how can I add cut as another variable?
 ```{r}
-
+ggplot(diamonds, aes(price, carat))+geom_point(color="orange")
 ```
 
 Rather than having all bars/dots/lines the same color, you can have them change by using various packages and by looking up a few color codes online. 
@@ -380,43 +377,55 @@ If you don't like the colors, we can specify specific ones using `scale_fill_man
 (need to specify option for color scales)
 We'll walk through these together because I think it's helpful to see what color combinations exist and how you can use them in a bar graph or a scatter plot.
 ```{r}
-
+ggplot(mtcars, aes(as.factor(gear), fill= as.factor(gear)))+geom_bar()+scale_fill_manual(values= c("orange", "black", "purple"))+theme_classic()
 ```
 `scale_color_manual(values = #)`; 
 ```{r}
-
+ggplot(mtcars, aes(as.factor(gear), fill= as.factor(gear)))+geom_bar()+scale_fill_manual(values= c("orange", "black", "purple"))+theme_classic()
 ```
 
 R ColorBrewer
 `scale_color_brewer(palette=)`
 ```{r}
+ggplot(mtcars, aes(mpg, hp, color= as.factor(gear)))+geom_point()+scale_color_manual(values=c("orange", "black", "purple"))
 
+
+library("RColorBrewer")
+ggplot(diamonds, aes(carat, fill=cut))+geom_histogram()+scale_fill_brewer(palette="Purples")
+
+ggplot(diamonds, aes(carat, price, color=cut))+geom_point()+scale_color_brewer(palette="Purples")
 ```
 
 Viridis
 `scale_color_viridis()`
 ```{r}
+library("viridis")
+ggplot(diamonds, aes(carat, fill=cut))+geom_histogram()+scale_fill_viridis(option = "inferno", discrete = TRUE)
 
-
+ggplot(diamonds, aes(carat, price, color=cut))+geom_point()+scale_color_viridis(discrete = TRUE, option="rocket")
 ```
 
 
 ### Learning Outcome 4 Practice. 
 1. Create a graph of bill length and island
 ```{r}
+data(penguins)
+ggplot(penguins, aes(island, bill_len, color=sex))+geom_point(position="jitter")+scale_color_viridis(discrete = TRUE, option="mako")+theme(panel.background = element_rect(fill="black", color="yellow"))
 
+
+ggplot(penguins, aes(island, bill_len, color=sex))+geom_point(position="jitter")+scale_color_viridis(discrete = TRUE, option="turbo")+theme(panel.background = element_rect(fill="purple", color="yellow"))
 ```
 
 2. In some way, include species as a third variable in this graph. 
 ```{r}
-
+ggplot(penguins, aes(island, bill_len, species, color=sex))+geom_point(position="jitter")+scale_color_viridis(discrete = TRUE, option="cividis")
 ```
 
 3. Create a graph of bill length and bill depth
 ```{r}
-
+ggplot(penguins, aes(bill_dep, bill_len, color=sex))+geom_point()+scale_color_viridis(discrete = TRUE, option="cividis")
 ```
 4. In some way, include species as a third variable.
 ```{r}
-
+ggplot(penguins, aes(bill_dep, bill_len, species, color=sex))+geom_point()+scale_color_viridis(discrete = TRUE, option="viridisMap")
 ```
