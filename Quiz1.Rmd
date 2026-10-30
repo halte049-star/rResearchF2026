@@ -22,6 +22,7 @@ data("starwars")
 ```{r}
 starHum<- data.frame(subset(starwars, starwars$species=="Human"))
 ```
+don't need the data.frame() aspect
 
 4. In this subset of data, who is the tallest character? 
 ```{r}
@@ -42,12 +43,13 @@ print(rowThree)
 mean(starwars$mass, na.rm=TRUE)
 #97.31186
 ```
+this is missing the masculine aspect
 
 7. Create a dataset that contains only the characters and the films that they appeared in from the full dataset. 
 ```{r}
 charAndFilm<- data.frame(starwars[,1], starwars[,12])
 ```
-
+consider select() instead
 
 8. Create a new column in the starwars dataset that contains a "ranking" of all characters (Note: you don't have to actually rank them. Just fill the column in with the numbers 1-87)
 ```{r}
@@ -58,6 +60,7 @@ starwars$rank<- 1:87
 ```{r}
 fromNaboo<- subset(starwars, starwars$homeworld=="Naboo")
 ```
+how many? 
 
 10. How many droids are in the full dataset? 
 ```{r}
