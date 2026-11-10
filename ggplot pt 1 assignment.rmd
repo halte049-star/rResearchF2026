@@ -1,6 +1,7 @@
 ---
 title: "ggplot pt 1 assignment"
 author: "Amanda Mae Woodward"
+student: "Ashley Halterman"
 date: "2026-10-29"
 output: html_document
 ---
@@ -24,34 +25,35 @@ ggplot(starwars, aes(eye_color))+geom_bar(fill="#223030")+theme(panel.background
 4. Create a graph displaying information about character's height in each homeworld. 
 
 ```{r}
-ggplot(starwars, aes(height, fill=homeworld))+geom_bar
+ggplot(starwars, aes(height, homeworld))+geom_point()
 ```
 
 5. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
 ```{r}
-ggplot(starwars, aes(height, fill=homeworld))+geom_bar(fill="#DD8E58")+theme(panel.background = element_rect(fill="#e5d1b8"), plot.background=element_rect(fill="#e5d1b8"), plot.title = element_text(hjust=0.5))+xlab("Character height")+ylab("Character homeworld")+ggtitle("Character and their homeworld")
+ggplot(starwars, aes(height, homeworld))+geom_point(fill="#DD8E58")+theme(panel.background = element_rect(fill="#e5d1b8"), plot.background=element_rect(fill="#e5d1b8"), plot.title = element_text(hjust=0.5))+xlab("Character height")+ylab("Character homeworld")+ggtitle("Character and their homeworld")
 ```
 
 6. Create a graph of character's height by mass. 
 
 ```{r}
-
+ggplot(starwars, aes(height, color=mass))+geom_bar()+theme_classic()
 ```
 
 
 7.Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
 ```{r}
-
+ggplot(starwars, aes(height, color=mass))+geom_bar(position=position_dodge(), fill="#680c0a")+theme(panel.background = element_rect(fill="#cdb9b1"), plot.background = element_rect(fill="#ab8b6d"), plot.title=element_text(hjust=0.5))+labs(x="Height of character", y="Mass of character", title="Mass and height of character")
 ```
+
 
 8. Add gender as a third variable to your graph of height by mass. 
 ```{r}
-
+ggplot(starwars, aes(height, color=mass, fill=gender))+geom_bar(position=position_dodge())
 ```
 
 
 9. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
 ```{r}
-
+ggplot(starwars, aes(height, color=mass, fill=gender))+geom_bar(position=position_dodge())+theme(plot.title=element_text(hjust=0.5))+labs(x="Height of character", y="Mass of character", title="Mass and height of character", fill="Gender of character")
 ```
 
