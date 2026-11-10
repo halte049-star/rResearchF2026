@@ -5,19 +5,53 @@ date: "2026-10-29"
 output: html_document
 ---
 1. open the starwars dataset in tidyverse
+```{r}
+library(tidyverse)
+data("starwars")
+```
 
 2. create a graph showing the frequency of eye colors in the dataset. 
 
-3. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc. 
+```{r}
+ggplot(starwars, aes(eye_color))+geom_bar()+theme_classic()
+```
+
+3. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
+```{r}
+ggplot(starwars, aes(eye_color))+geom_bar(fill="#223030")+theme(panel.background = element_rect(fill="#E8D9CD"), plot.background=element_rect(fill="#E8D9CD"),element_text(size=.1), plot.title = element_text(hjust=0.5))+ylab("Frequency")+xlab("Eye Color")+ggtitle("Frequency of Eye Colors")
+```
 
 4. Create a graph displaying information about character's height in each homeworld. 
 
+```{r}
+ggplot(starwars, aes(height, fill=homeworld))+geom_bar
+```
+
 5. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
+```{r}
+ggplot(starwars, aes(height, fill=homeworld))+geom_bar(fill="#DD8E58")+theme(panel.background = element_rect(fill="#e5d1b8"), plot.background=element_rect(fill="#e5d1b8"), plot.title = element_text(hjust=0.5))+xlab("Character height")+ylab("Character homeworld")+ggtitle("Character and their homeworld")
+```
 
 6. Create a graph of character's height by mass. 
 
+```{r}
+
+```
+
+
 7.Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
+```{r}
+
+```
 
 8. Add gender as a third variable to your graph of height by mass. 
+```{r}
+
+```
+
 
 9. Customize your graph to make it more presentable. Consider color, backgrounds, axes, etc.
+```{r}
+
+```
+
