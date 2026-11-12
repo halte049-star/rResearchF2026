@@ -344,7 +344,8 @@ separate uses the following arguments:
 `separate(data, columns, into, sep)`
 let's look at the subject column in our dataset
 ```{r}
-
+aggressionAnxietyDat |> separate(subjNo, into= c("condition2", "subjNo"), sep= 1)
+#sep can also a character, like a comma or a hyphen sep= "-"
 ```
 
 **Mutate** 
