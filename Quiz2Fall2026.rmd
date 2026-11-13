@@ -22,14 +22,42 @@ newWars<- starwars |> separate(films, into=c("film1", "film2", "film3", "film4",
 3. alter the data from wide data to long data
 
 ```{r}
-newWarsLong<- pivot_longer(newWars, col=c("film1", "film2", "film3", "film4", "film5", "film6", "film7"), names_to= "movie", values_to="name", na_rm=TRUE, names_repair = )
+newWarsLong<- pivot_longer(newWars, col=c("film1", "film2", "film3", "film4", "film5", "film6", "film7"), names_to= "movie", values_to="movieName", names_repair = "minimal", values_drop_na = TRUE)
 ```
-
 
 4. in the column where you stored the films, rename the levels so each film name is consistent (e.g. get rid of the "c(" and ")" )
 
+```{r}
+newWarsLong$movieName<- newWarsLong$movieName |> 
+  str_remove_all(fixed('c("')) |>
+  str_remove_all(fixed('")')) |>
+  str_remove_all(fixed('"'))
+```
+
+
 5. Create a column in your dataset that indicates whether a character was in the first starwars film, *Star Wars Episode IV: A New Hope* 
 
+```{r}
+anhChar<- function(movieName){
+  ifelse(movieName== "A New Hope", "YES", "NO")
+}
+
+newWarsLong$inNewHope<- (newWarsLong$name)
+
+print(newWarsLong$inNewHope)
+```
+
+
 6. BMI is calculated as mass in Kg/height in meters squared. You currently have mass in Kg and height in cm. Create a column that contains each character's BMI. 
+```{r}
+newWars<-newWars %>%mutate(heightM= height/100)
+newWars<- newWars %>%mutate(bmi= (mass/heightM)^2)
+```
+
 
 7. create a dataframe that contains only the name, hair color, and eye color for each character. 
+
+```{r}
+newNewWars<- newWars%>%select(name, hair_color, eye_color)
+```
+
