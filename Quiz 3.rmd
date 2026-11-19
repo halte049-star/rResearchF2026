@@ -1,0 +1,72 @@
+---
+title: "Quiz 3"
+author: "Amanda Mae Woodward"
+date: "2025-10-30"
+output: html_document
+---
+1. Load the spotify dataset (available in github repository).
+```{r}
+library(readr)
+spotDat <- read_csv("spotifyDat Fall26.csv")
+View(spotDat)
+```
+
+2. Create a bar graph of the artist column (Hint: use theme(axis.text.x = element_text(angle = 90)) to rotate the x axis).
+```{r}
+library(ggplot2)
+ggplot(spotDat, aes(artist))+geom_bar()+theme((axis.text.x = element_text(angle = 90)))
+```
+
+3. Add genre as a third variable in your graph.
+```{r}
+ggplot(spotDat, aes(artist, fill=genre))+geom_bar()
+```
+
+4. Use color brewer to add color to your graph in 3. 
+```{r}
+library(RColorBrewer)
+ggplot(spotDat, aes(artist, fill=genre))+geom_bar()+theme((axis.text.x = element_text(angle = 90)))+scale_fill_brewer(palette= "Greens")
+```
+
+5. Place the legend for the graph you made in 3 on the bottom of the graph. 
+```{r}
+ggplot(spotDat, aes(artist, fill=genre))+geom_bar()+theme(legend.position = "bottom")
+```
+
+As you probably recognized, the graph you made is really hard to read.
+
+6. Separate the genre column into multiple columns (e.g. so each genre listed is in a unique column)
+```{r}
+library(dplyr)
+library(tidyr)
+spotWide<- spotDat |> pivot_wider(id_cols=c("artist","tempo","song", "popularity", "danceability"), names_from="genre", values_from="genre", values_fn=list) 
+
+```
+
+7. Use these genre columns to create a dataset in long format. 
+```{r}
+spotLong<- spotWide |> pivot_longer(cols=c(colnames(spotWide)[6:64]), names_to="genres", values_to="song genre")
+```
+
+8.use facet wrap to make graphs of artist by genre 
+```{r}
+spotGraph<- ggplot(spotDat, aes(artist, fill=genre))+ geom_bar()+theme((axis.text.x = element_text(angle = 90)))
+spotGraph+facet_wrap(~genre)
+```
+
+9. Create a graph that includes the variables tempo and dancability. 
+```{r}
+ggplot(spotDat, aes(tempo, danceability))+geom_point(shape=4)+theme_bw()
+```
+
+10. Add popularity as a third variable. 
+```{r}
+library(viridis)
+ggplot(spotDat, aes(tempo, danceability, color=popularity))+geom_point(shape=4)+theme_dark()
+```
+
+11. Use viridis as a color in your graph from #10
+```{r}
+library(viridis)
+ggplot(spotDat, aes(tempo, danceability, color=popularity))+geom_point(shape=4)+scale_color_viridis(discrete=FALSE, option="plasma")
+```

@@ -84,15 +84,21 @@ library(viridis)
 Try these on your own! Create a code chunk with a graph of your favorite data this semester. 
 
 1. What happens if you use echo= FALSE? 
+```{r ech= FALSE}
+how ya doing?
+```
 
 
 2. What happens if you use include FALSE? 
+```{r include= FALSE}
+hiya
+```
 
 
 3. Try combining multiple arguments in your code chunk (pick your favorites).
 
-```{r tryitout}
-
+```{r newCode, echo=FALSE, }
+hihihi
 ```
 
 

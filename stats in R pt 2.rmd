@@ -81,3 +81,40 @@ ACME: tells use where the relationship is mediated
 
 # logistic regression 
 linear regression with a dichotomous outcome 
+
+Repeated measure ANOVA
+```{r}
+data(sleep)
+al<- aov(extra ~ group + ID, data=sleep)
+summary(al)
+#works but not totally correct
+a2<- aov(extra~ group +Error(ID), data=sleep)
+summary(a2)
+```
+
+```{r}
+library(ez)
+ezANOVA(sleep, dv= extra, wid= ID, within= group)
+```
+
+```{r}
+library(lme4)
+library(lmerTest)
+data("ChickWeight")
+```
+
+use lmer() to create mixed effect model
+include (slope | intercept) in the model
+- (1| variable) indicates a random intercept, where participants may have different starting points 
+- if you replace the one with a second variable, it indicates a random slope, where rate of change may differ across participants. 
+```{r}
+lmer(weight ~ Diet + (Time|Chick), data=ChickWeight)
+```
+
+## generalized linear mixed effect models (glmer)
+-glmer(dv~ IV+ (slope|intercept), data= dataframe, family="")
+- family options include binomial (dichotomous data) poisson (count data), and several others
+```{r}
+
+```
+
