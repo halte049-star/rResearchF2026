@@ -1,6 +1,6 @@
 ---
 title: "stats in R pt 2"
-author: "Amanda Mae Woodward"
+author: "Ashley Halterm"
 date: "2026-11-17"
 output: html_document
 ---
