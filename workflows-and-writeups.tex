@@ -1,0 +1,393 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={Workflows and Write Ups},
+  pdfauthor={Amanda Mae Woodward},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Workflows and Write Ups}
+\author{Amanda Mae Woodward}
+\date{2026-11-17}
+
+\begin{document}
+\maketitle
+
+The goal of this class is to help us figure out how to present our
+results.
+
+\subsection{Learning Outcomes:}\label{learning-outcomes}
+
+By the end of this class, students should be able to:
+
+\begin{itemize}
+\item
+  Describe modifications that can be made to R code chunks
+\item
+  Explain how to write code inline with text
+\item
+  Create Write Ups that combine graphs, interpretation, and analyses
+  into a streamlined document.
+\end{itemize}
+
+\subsection{Learning Outcome \#1: Describe modifications that can be
+made to R code
+chunks}\label{learning-outcome-1-describe-modifications-that-can-be-made-to-r-code-chunks}
+
+Today we're going to focus on code chunks themselves, rather than what
+goes into a code chunk. You'll notice that I will be switching between
+knitted versions and non knitted versions throughout class. This is to
+help us get a sense of what these options do to our codes.
+
+\textbf{Disclaimer:} This is going to be a brief introduction. You can
+write full APA style papers in R Markdown files, and this is typically
+easier if you use LaTex code. If you are interested in learning more
+about this option, here is a good resource for it: psychstatsworkshop
+
+\subsubsection{Changing Code Chunks}\label{changing-code-chunks}
+
+When we are making documents in R Markdown, we don't always want people
+to see all of our code and all of our output. We can modify our code
+chunks to make ``hide'' certain aspects of code.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{echo:}
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  if TRUE, shows code in knitted file
+\item
+  if FALSE, does not show code
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(mtcars)}
+\FunctionTok{mean}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{mpg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20.09062
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 20.09062
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{include:}
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  if TRUE, code and output are included in the file
+\item
+  if FALSE, code and output are not included in the file
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(mtcars, }\FunctionTok{aes}\NormalTok{(mpg, hp))}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}\FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{workflows-and-writeups_files/figure-latex/testIncludeTRUE-1.pdf}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{error:}
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  if TRUE, prints error messages in document
+\item
+  if FALSE, does not print error messages
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \textbf{message and warning:}
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  two separate options
+\item
+  if TRUE, includes R messages and warnings in your document
+\item
+  if FALSE, does not include R messages or warnings
+\end{itemize}
+
+\subsubsection{Practice:}\label{practice}
+
+Try these on your own! Create a code chunk with a graph of your favorite
+data this semester.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  What happens if you use echo= FALSE?
+\item
+  What happens if you use include FALSE?
+\item
+  Try combining multiple arguments in your code chunk (pick your
+  favorites).
+\end{enumerate}
+
+\subsubsection{More resources:}\label{more-resources}
+
+The R/Posit Cloud Cheatsheets have a whole list of things you can
+include or not.
+
+\subsection{Learning Outcome \#2: Explain how to write code inline with
+text}\label{learning-outcome-2-explain-how-to-write-code-inline-with-text}
+
+You can also use r code inline (meaning in your actual sentences),
+rather than in code chunks. The way to set this up is to use \texttt{}.
+
+If you want to highlight something is code, but not run it, you can do
+something like \texttt{mean(data\$column)}.
+
+If you want to actually run R code, you need to modify it slightly to
+insert code here. For instance, we could do ``the mean of the mpg column
+is 20.090625
+
+the standard deviation of the price column is 3989.4397381
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{correlationTest}\OtherTok{\textless{}{-}} \FunctionTok{cor.test}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{mpg, mtcars}\SpecialCharTok{$}\NormalTok{hp)}
+\end{Highlighting}
+\end{Shaded}
+
+the correlation from \texttt{cor.test()} is -0.7761684
+
+the correlation is -0.7761684
+
+\subsubsection{Practice:}\label{practice-1}
+
+Try Writing a sentence with any calculation you'd like in it.
+
+\paragraph{More Resources}\label{more-resources-1}
+
+More information about writing APA results can be found here
+
+\subsection{Learning Outcome \#3:Create Write Ups that combine graphs,
+interpretation, and analyses into a streamlined
+document.}\label{learning-outcome-3create-write-ups-that-combine-graphs-interpretation-and-analyses-into-a-streamlined-document.}
+
+Of course, we likely want to include tables and graphs in our write ups.
+We can do this, but it is helpful to use multiple code chunks and save
+information as needed.
+
+\subsection{Example:}\label{example}
+
+\paragraph{Results:}\label{results}
+
+In the current study, we had 344 penguins participate. We collected
+average flipper lengths, which can be seen in table 1.
+
+\textbf{Table 1}
+
+\begin{longtable}[]{@{}lr@{}}
+\caption{average flipper length}\tabularnewline
+\toprule\noalign{}
+species & meanFlipper \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+species & meanFlipper \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Adelie & 189.9536 \\
+Chinstrap & 195.8235 \\
+Gentoo & 217.1870 \\
+\end{longtable}
+
+\textbf{bad table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguinFlipper}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   species   meanFlipper
+##   <fct>           <dbl>
+## 1 Adelie           190.
+## 2 Chinstrap        196.
+## 3 Gentoo           217.
+\end{verbatim}
+
+\subsubsection{Practice:}\label{practice-2}
+
+As a class, let's come up with something we want to analyze and create
+results for from the penguins dataset.
+
+\begin{itemize}
+\tightlist
+\item
+  What's the research question?
+\item
+  descriptive statistics?
+\item
+  inferential statistic?
+\item
+  how to present results? (table, graph, both?!)
+\end{itemize}
+
+\subsubsection{APA version of tables:}\label{apa-version-of-tables}
+
+We don't always want just a table of counts, or we may want to format
+statistical output in APA. To do so, the library \texttt{apaTables} has
+code to report several different types of statistics. Code can be found
+here
+
+\end{document}

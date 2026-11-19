@@ -1,0 +1,67 @@
+---
+title: "ggplotPart2"
+author: "Ashley Halterman"
+date: "2026-11-19"
+output: html_document
+---
+1. Open the starwars dataset (located in tidyverse)
+```{r}
+library(tidyverse)
+data("starwars")
+```
+
+2. Create a scatter plot of character's height and mass.
+```{r}
+library(ggplot2)
+ggplot(starwars, aes(height, mass))+ geom_point()
+```
+
+2a. Change the color and shape of the points in your scatter plot. 
+```{r}
+ggplot(starwars, aes(height, mass))+ geom_point(shape= 5, color="purple")
+```
+
+3. Add Homeworld as a third variable to your scatterplot. 
+```{r}
+ggplot(starwars, aes(height, mass, color=homeworld))+ geom_point()
+```
+
+3a. What do you notice about the graph? (e.g. describe what you see)
+**There is a lot of rows for Homeworld, each are in a different color (rainbow), and each dot (character) is colored by their Homeworld. Also, most of the data is at the bottom of the plot but there is an outlier with a mass over 1000 which makes it difficult to look at each data point individually.**
+
+4. Make a boxplot of height. 
+```{r}
+ggplot(starwars, aes(y= height))+ geom_boxplot()
+```
+
+5. Make a boxplot of height for each species present in the data.
+```{r}
+ggplot(starwars, aes(x= species, y= height))+ geom_boxplot()
+```
+
+5a. change the appearance of your graph in at least 3 ways.
+```{r}
+ggplot(starwars, aes(species, height))+ geom_boxplot(fill= "white", color="purple")+ theme_classic()+ ggtitle(label = "Height of species")
+
+#1. added color
+#2. added theme
+#3. added label
+```
+
+6. Using any variables in the starwars dataset, create a graph that uses a color palette from viridis.
+```{r}
+library(viridis)
+ggplot(starwars, aes(height, mass, color=gender))+ geom_point()+ scale_fill_viridis(option="plasma", discrete=TRUE)
+```
+
+7.Using any variables in the starwars dataset, create a graph that uses a color palette from RColorBrewer.
+```{r}
+library(RColorBrewer)
+ggplot(starwars, aes(height, mass, color=gender))+ geom_point()+ scale_color_brewer(palette="Blues") 
+```
+
+8. Using any variables in the starwars dataset, create a graph using facet_wrap
+```{r}
+heightMassColor<- ggplot(starwars, aes(height, mass, color= gender))+ geom_boxplot()+ facet_wrap(~gender)
+```
+
